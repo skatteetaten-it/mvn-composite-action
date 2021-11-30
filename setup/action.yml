@@ -1,16 +1,18 @@
 name: "Maven setup med nexus"
 description: "Greet someone"
 inputs:
+  skerootca:
+    description: "root sertifikat"
+    required: true
   skerootca-prosjekter:
     description: "Prosjekter, settes om det er en multi pom"
     required: false
-outputs:
-  random-number:
-    description: "Random number"
-    value: ${{ steps.random-number-generator.outputs.random-id }}
 runs:
   using: "composite"
   steps:
+    - name: skerootca
+      env:
+        SKEROOTCA: ${{ inputs.skerootca }}
     - run: ${{ github.action_path }}/skerootca.sh ${{ inputs.skerootca-prosjekter }}
       shell: bash
     - name: Set up JDK 1.11

@@ -31,6 +31,7 @@ runs:
       run: |
         echo "coverage = ${{ steps.jacoco.outputs.coverage }}"
         echo "branch coverage = ${{ steps.jacoco.outputs.branches }}"
+      shell: bash
 
     - name: Commit and push the badge (if it changed)
       uses: EndBug/add-and-commit@v7

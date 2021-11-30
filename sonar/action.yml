@@ -15,6 +15,7 @@ runs:
         SONAR_TOKEN: ${{ secrets.SONARQUBE_TOKEN }}
         SONAR_HOST_URL: ${{ secrets.SONARQUBE_HOST}}
       run: mvn -U -B verify sonar:sonar --fail-at-end
+      shell: bash
 
     - name: Publish Test Report
       if: ${{ always() }}

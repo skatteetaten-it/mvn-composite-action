@@ -1,3 +1,4 @@
+echo "Hello World"
 if [ -z "$1" ]
   then
     echo "Ingen parametre"

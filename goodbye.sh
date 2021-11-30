@@ -1,1 +1,1 @@
-Goodbye
+echo Goodbye

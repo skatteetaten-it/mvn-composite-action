@@ -1,5 +1,5 @@
-name: "Sonar med jacoco"
-description: "Greet someone"
+name: "Test rapport"
+description: "Test rapport med jacoco"
 inputs:
   jacoco-csv-file:
     description: "Overstyr jacoco csv fil"
@@ -7,16 +7,6 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: Build with Maven
-      env:
-        NEXUS_USER: ${{ secrets.NEXUS_USERNAME }}
-        NEXUS_PASS: ${{ secrets.NEXUS_PASSWORD }}
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Needed to get PR information, if any
-        SONAR_TOKEN: ${{ secrets.SONARQUBE_TOKEN }}
-        SONAR_HOST_URL: ${{ secrets.SONARQUBE_HOST}}
-      run: mvn -U -B verify sonar:sonar --fail-at-end
-      shell: bash
-
     - name: Publish Test Report
       if: ${{ always() }}
       uses: scacap/action-surefire-report@v1

@@ -47,3 +47,5 @@ runs:
     - name: setup cache
       id: cache
       run: mkdir -p /cache/repository; ln -sfn /cache/repository /home/runner/.m2/repository
+      shell: bash
+

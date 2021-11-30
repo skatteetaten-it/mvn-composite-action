@@ -47,11 +47,3 @@ runs:
     - name: setup cache
       id: cache
       run: mkdir -p /cache/repository; ln -sfn /cache/repository /home/runner/.m2/repository
-
-    - run: echo Hello ${{ inputs.who-to-greet }}.
-      shell: bash
-    - id: random-number-generator
-      run: echo "::set-output name=random-id::$(echo $RANDOM)"
-      shell: bash
-    - run: ${{ github.action_path }}/skerootca.sh ${{ inputs.who-to-greet }}
-      shell: bash

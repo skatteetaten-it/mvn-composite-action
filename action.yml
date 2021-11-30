@@ -1,4 +1,4 @@
-name: "Hello World"
+name: "Maven setup med nexus"
 description: "Greet someone"
 inputs:
   who-to-greet: # id of input
@@ -12,10 +12,46 @@ outputs:
 runs:
   using: "composite"
   steps:
+    - name: Set up JDK 1.11
+      uses: actions/setup-java@v2
+      with:
+        java-version: "11"
+        distribution: "temurin"
     - run: echo Hello ${{ inputs.who-to-greet }}.
       shell: bash
     - id: random-number-generator
       run: echo "::set-output name=random-id::$(echo $RANDOM)"
       shell: bash
-    - run: ${{ github.action_path }}/goodbye.sh
+    - run: ${{ github.action_path }}/skerootca.sh ${{ inputs.who-to-greet }}
+      shell: bash
+    - name: Set up Maven
+      uses: stCarolas/setup-maven@v4.2
+      with:
+        maven-version: 3.8.2
+
+    - name: maven-settings-xml-action
+      uses: whelk-io/maven-settings-xml-action@v18
+      with:
+        servers: >
+          [
+          { "id": "nexus", "username": "${env.NEXUS_USER}", "password": "${env.NEXUS_PASS}" },
+          { "id": "snapshots", "username": "${env.NEXUS_USER}", "password": "${env.NEXUS_PASS}" },
+          { "id": "releases", "username": "${env.NEXUS_USER}", "password": "${env.NEXUS_PASS}" }
+          ]
+        mirrors: >
+          [{ "id": "nexus", "mirrorOf": "*", "name": "Aurora Nexus", "url": "https://nexus.sits.no/repository/maven-intern" }]
+        repositories: >
+          [{ "id": "central", "url": "http:/central", "releases": {"enabled": "true"}, "snapshots": {"enabled": "true"} }]
+        plugin_repositories: >
+          [{ "id": "central", "url": "http:/central", "releases": {"enabled": "true"}, "snapshots": {"enabled": "true"} }]
+    - name: setup cache
+      id: cache
+      run: mkdir -p /cache/repository; ln -sfn /cache/repository /home/runner/.m2/repository
+
+    - run: echo Hello ${{ inputs.who-to-greet }}.
+      shell: bash
+    - id: random-number-generator
+      run: echo "::set-output name=random-id::$(echo $RANDOM)"
+      shell: bash
+    - run: ${{ github.action_path }}/skerootca.sh ${{ inputs.who-to-greet }}
       shell: bash

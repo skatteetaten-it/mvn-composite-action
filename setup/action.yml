@@ -13,7 +13,7 @@ runs:
     - name: skerootca
       env:
         SKEROOTCA: ${{ inputs.skerootca }}
-    - run: ${{ github.action_path }}/skerootca.sh ${{ inputs.skerootca-prosjekter }}
+      run: ${{ github.action_path }}/skerootca.sh ${{ inputs.skerootca-prosjekter }}
       shell: bash
     - name: Set up JDK 1.11
       uses: actions/setup-java@v2

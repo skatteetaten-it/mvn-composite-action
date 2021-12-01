@@ -1,0 +1,34 @@
+name: "Build and deploy"
+description: "Build and deploy"
+inputs:
+  image-name:
+    description: "build image name"
+    required: true
+  nexus-user:
+    description: "Nexus username"
+    required: true
+  nexus-pass:
+    description: "Nexus password"
+    required: true
+  github-token:
+    description: "Github token"
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - name: Build dockerimage
+      env:
+        NEXUS_USER: ${{ inputs.nexus-user }}
+        NEXUS_PASS: ${{ inputs.nexus-pass }}
+      run: ./mvnw -U -B spring-boot:build-image -Dspring-boot.build-image.imageName=${{ inputs.image-name }}
+
+    - name: Login to GitHub Container Registry
+      uses: docker/login-action@v1
+      with:
+        registry: ghcr.io
+        username: ${{ github.repository_owner }}
+        password: ${{ inputs.github-token }}
+
+    - name: "push image"
+      run: |
+        docker push ${{ inputs.image-name }}

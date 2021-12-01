@@ -4,6 +4,7 @@ inputs:
   jacoco-csv-file:
     description: "Overstyr jacoco csv fil"
     required: false
+    default: target/site/jacoco/jacoco.csv
 runs:
   using: "composite"
   steps:

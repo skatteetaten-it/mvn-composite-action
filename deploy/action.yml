@@ -31,5 +31,5 @@ runs:
         password: ${{ inputs.github-token }}
 
     - name: "push image"
-      run: |
-        docker push ${{ inputs.image-name }}
+      run: docker push ${{ inputs.image-name }}
+      shell: bash

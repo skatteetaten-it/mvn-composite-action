@@ -1,0 +1,51 @@
+name: "Build and deploy"
+description: "Build and deploy"
+inputs:
+  skerootca:
+    description: "root ca"
+    required: true
+  image-name:
+    description: "build image name"
+    required: true
+  nexus-user:
+    description: "Nexus username"
+    required: true
+  nexus-pass:
+    description: "Nexus password"
+    required: true
+  github-token:
+    description: "Github token"
+    required: true
+  sonarqube-token:
+    description: "sonarqube-token"
+    required: true
+  sonarqube-host:
+    description: "sonarqube-token"
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - name: Maven setup
+      uses: skatteetaten-trial/mvn-composite-action/setup@main
+      with:
+        skerootca: ${{ inputs.skerootca }}
+
+    - name: Build with maven and sonar
+      env:
+        NEXUS_USER: ${{ inputs.nexus-user }}
+        NEXUS_PASS: ${{ inputs.nexus-pass }}
+        GITHUB_TOKEN: ${{ inputs.github-token }} # Needed to get PR information, if any
+        SONAR_TOKEN: ${{ inputs.sonarqube-token }}
+        SONAR_HOST_URL: ${{ inputs.sonarqube-host }}
+      run: mvn -U -B verify sonar:sonar --fail-at-end
+
+    - name: Test report
+      uses: skatteetaten-trial/mvn-composite-action/test-report@main
+
+    - name: Build and deploy
+      uses: skatteetaten-trial/mvn-composite-action/deploy@main
+      with:
+        nexus-user: ${{ inputs.nexus-user }}
+        nexus-pass: ${{ inputs.nexus-pass }}
+        github-token: ${{ inputs.github-token }}
+        image-name: ${{ inputs.image-name }}

@@ -9,7 +9,6 @@ runs:
   using: "composite"
   steps:
     - name: Publish Test Report
-      if: ${{ always() }}
       uses: scacap/action-surefire-report@v1
 
     - name: Generate JaCoCo Badge
@@ -27,6 +26,7 @@ runs:
 
     - name: Commit and push the badge (if it changed)
       uses: EndBug/add-and-commit@v7
+      if: ${{ github.ref == 'refs/heads/main' }}
       with:
         default_author: github_actions
         message: "[ci skip] commit badge"
@@ -36,4 +36,4 @@ runs:
       uses: actions/upload-artifact@v2
       with:
         name: jacoco-report
-        path:  target/site/jacoco/
+        path: target/site/jacoco/

@@ -43,7 +43,7 @@ runs:
     - name: Test report
       uses: skatteetaten-trial/mvn-composite-action/test-report@main
 
-    - name: Build and deploy
+    - name: Deploy
       uses: skatteetaten-trial/mvn-composite-action/deploy@main
       with:
         nexus-user: ${{ inputs.nexus-user }}

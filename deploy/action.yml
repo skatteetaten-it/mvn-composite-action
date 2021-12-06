@@ -20,7 +20,7 @@ runs:
       env:
         NEXUS_USER: ${{ inputs.nexus-user }}
         NEXUS_PASS: ${{ inputs.nexus-pass }}
-      run: mvn -U -B spring-boot:build-image -Dspring-boot.build-image.imageName=${{ inputs.image-name }}
+      run: mvn -U -B -DskipTests=true spring-boot:build-image -Dspring-boot.build-image.imageName=${{ inputs.image-name }}
       shell: bash
 
     - name: Login to GitHub Container Registry

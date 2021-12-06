@@ -38,6 +38,7 @@ runs:
         SONAR_TOKEN: ${{ inputs.sonarqube-token }}
         SONAR_HOST_URL: ${{ inputs.sonarqube-host }}
       run: mvn -U -B verify sonar:sonar --fail-at-end
+      shell: bash
 
     - name: Test report
       uses: skatteetaten-trial/mvn-composite-action/test-report@main

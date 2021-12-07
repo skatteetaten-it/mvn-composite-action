@@ -53,6 +53,7 @@ runs:
       uses: skatteetaten-trial/mvn-composite-action/test-report@main
 
     - name: Deploy
+      if: contains(github.ref, '/dependabot/') != true
       uses: skatteetaten-trial/mvn-composite-action/deploy@main
       with:
         nexus-user: ${{ inputs.nexus-user }}

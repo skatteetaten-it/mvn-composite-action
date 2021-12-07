@@ -30,17 +30,26 @@ runs:
       with:
         skerootca: ${{ inputs.skerootca }}
 
-    - name: Build with maven and sonar
+    - name: Build with maven
       env:
         NEXUS_USER: ${{ inputs.nexus-user }}
         NEXUS_PASS: ${{ inputs.nexus-pass }}
         GITHUB_TOKEN: ${{ inputs.github-token }} # Needed to get PR information, if any
+      run: mvn -U -B verify
+      shell: bash
+    - name: Sonar
+      if: contains(github.ref, '/dependabot/') != true
+      env:
+        NEXUS_USER: ${{ inputs.nexus-user }}
+        NEXUS_PASS: ${{ inputs.nexus-pass }}
+        GITHUB_TOKEN: ${{ inputs.github-token }}
         SONAR_TOKEN: ${{ inputs.sonarqube-token }}
         SONAR_HOST_URL: ${{ inputs.sonarqube-host }}
-      run: mvn -U -B verify sonar:sonar --fail-at-end
+      run: mvn sonar:sonar
       shell: bash
 
     - name: Test report
+      if: contains(github.ref, '/dependabot/') != true
       uses: skatteetaten-trial/mvn-composite-action/test-report@main
 
     - name: Deploy

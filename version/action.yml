@@ -1,0 +1,12 @@
+name: "Get version"
+description: "Get the version number"
+inputs:
+  type:
+    description: "branch, release"
+    required: true
+outputs:
+  version: # id of output
+    description: "The version number"
+runs:
+  using: "node12"
+  main: "index.js"

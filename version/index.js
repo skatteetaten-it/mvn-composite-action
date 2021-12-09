@@ -11,10 +11,9 @@ function run() {
   const type = core.getInput("type", { required: true });
   let version;
   if (type == "release") {
-    version = findMatch("ref/tags/(.*)");
-  }
-  if (type == "branch") {
-    version = findMatch("ref/heads/(.*)");
+    version = findMatch("refs/tags/(.*)");
+  } else if (type == "branch") {
+    version = findMatch("refs/heads/(.*)");
   } else {
     core.setFailed("Invalid type: " + type + " (type is: branch, release)");
     return;

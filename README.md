@@ -34,7 +34,7 @@ jobs:
          github-token: ${{ secrets.GITHUB_TOKEN }}
          sonarqube-token: ${{ secrets.SONARQUBE_TOKEN }}
          sonarqube-host: ${{ secrets.SONARQUBE_HOST }}
-         image-name: ghcr.io/skatteetaten-trial/skyklar-pilot/referanse-app/referanse-app:${{ steps.version.outputs.version }}
+         image-name: ghcr.io/skatteetaten-it/skyklar-pilot/referanse-app/referanse-app:${{ steps.version.outputs.version }}
 ```
 
 ### Eksempel på å bygge en relase
@@ -69,7 +69,7 @@ jobs:
             github-token: ${{ secrets.GITHUB_TOKEN }}
             sonarqube-token: ${{ secrets.SONARQUBE_TOKEN }}
             sonarqube-host: ${{ secrets.SONARQUBE_HOST }}
-            image-name: ghcr.io/skatteetaten-trial/skyklar-pilot/referanse-app/referanse-app:${{ steps.version.outputs.version }}
+            image-name: ghcr.io/skatteetaten-it/skyklar-pilot/referanse-app/referanse-app:${{ steps.version.outputs.version }}
 ```
 
 ## Hoved action skatteetaten-it/mvn-composite-action@v1

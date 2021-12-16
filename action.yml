@@ -26,7 +26,7 @@ runs:
   using: "composite"
   steps:
     - name: Maven setup
-      uses: skatteetaten-trial/mvn-composite-action/setup@main
+      uses: skatteetaten-it/mvn-composite-action/setup@v1
       with:
         skerootca: ${{ inputs.skerootca }}
 
@@ -50,11 +50,11 @@ runs:
 
     - name: Test report
       if: contains(github.ref, '/dependabot/') != true
-      uses: skatteetaten-trial/mvn-composite-action/test-report@main
+      uses: skatteetaten-it/mvn-composite-action/test-report@v1
 
     - name: Deploy
       if: contains(github.ref, '/dependabot/') != true
-      uses: skatteetaten-trial/mvn-composite-action/deploy@main
+      uses: skatteetaten-it/mvn-composite-action/deploy@v1
       with:
         nexus-user: ${{ inputs.nexus-user }}
         nexus-pass: ${{ inputs.nexus-pass }}

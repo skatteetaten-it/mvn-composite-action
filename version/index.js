@@ -23,7 +23,7 @@ function run() {
     core.setFailed("Could not find version: " + type + " (ref: " + ref + ")");
   }
 
-  core.setOutput("version", version.replaceAll("/", "_"));
+  core.setOutput("version", version.replace(/_/g, "_"));
 }
 
 try {

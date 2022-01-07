@@ -1,6 +1,9 @@
 name: "Build and deploy"
 description: "Build and deploy"
 inputs:
+  type:
+    description: "branch, release"
+    required: true
   skerootca:
     description: "root ca"
     required: true
@@ -25,6 +28,11 @@ inputs:
 runs:
   using: "composite"
   steps:
+    - name: Hent versjon
+      id: version
+      uses: skatteetaten-it/mvn-composite-action/version@main
+      with:
+        type: ${{ inputs.type }}
     - name: Maven setup
       uses: skatteetaten-it/mvn-composite-action/setup@v1
       with:
@@ -43,9 +51,7 @@ runs:
         NEXUS_USER: ${{ inputs.nexus-user }}
         NEXUS_PASS: ${{ inputs.nexus-pass }}
         GITHUB_TOKEN: ${{ inputs.github-token }}
-        SONAR_TOKEN: ${{ inputs.sonarqube-token }}
-        SONAR_HOST_URL: ${{ inputs.sonarqube-host }}
-      run: mvn sonar:sonar
+      run: sonar:sonar -Dsonar.projectVersion=${{ inputs.version }} -Dsonar.branch.name=main -Dsonar.login=${{ inputs.sonarqube-token }} -e -Dsonar.host.url=${{ inputs.sonarqube-host }}  -B
       shell: bash
 
     - name: Test report
@@ -59,4 +65,4 @@ runs:
         nexus-user: ${{ inputs.nexus-user }}
         nexus-pass: ${{ inputs.nexus-pass }}
         github-token: ${{ inputs.github-token }}
-        image-name: ${{ inputs.image-name }}
+        image-name: ${{ inputs.image-name }}::${{ steps.version.outputs.version }}

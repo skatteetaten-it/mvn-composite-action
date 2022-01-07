@@ -22,9 +22,6 @@ inputs:
   sonarqube-token:
     description: "sonarqube-token"
     required: true
-  sonarqube-host:
-    description: "sonarqube-token"
-    required: true
 runs:
   using: "composite"
   steps:
@@ -65,4 +62,4 @@ runs:
         nexus-user: ${{ inputs.nexus-user }}
         nexus-pass: ${{ inputs.nexus-pass }}
         github-token: ${{ inputs.github-token }}
-        image-name: ${{ inputs.image-name }}::${{ steps.version.outputs.version }}
+        image-name: ${{ inputs.image-name }}:${{ steps.version.outputs.version }}

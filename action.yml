@@ -51,7 +51,7 @@ runs:
         NEXUS_USER: ${{ inputs.nexus-user }}
         NEXUS_PASS: ${{ inputs.nexus-pass }}
         GITHUB_TOKEN: ${{ inputs.github-token }}
-      run: mvn sonar:sonar -Dsonar.projectVersion=${{ steps.version.outputs.version }} -Dsonar.branch.name=${{ github.ref_name	 }} -Dsonar.login=${{ inputs.sonarqube-token }} -e -Dsonar.host.url=${{ inputs.sonarqube-host }}  -B
+      run: mvn sonar:sonar -Dsonar.projectVersion=${{ steps.version.outputs.version }} -Dsonar.branch.name=${{ github.ref_name	 }} -Dsonar.login=${{ inputs.sonarqube-token }} -e -Dsonar.host.url=https://sonar.aurora.skead.no/   -B
       shell: bash
 
     - name: Test report

@@ -27,7 +27,7 @@ runs:
   steps:
     - name: Hent versjon
       id: version
-      uses: skatteetaten-it/mvn-composite-action/version@feature/sonar
+      uses: skatteetaten-it/mvn-composite-action/version@v1
       with:
         type: ${{ inputs.type }}
     - name: Maven setup

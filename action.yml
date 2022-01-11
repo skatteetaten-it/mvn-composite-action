@@ -35,8 +35,8 @@ runs:
   using: "composite"
   steps:
     - uses: actions/checkout@v2
-    with:
-      fetch-depth: 0
+      with:
+        fetch-depth: 0
     - name: Hent versjon
       id: version
       uses: skatteetaten-it/mvn-composite-action/version@v1

@@ -52,6 +52,7 @@ runs:
       run: mvn -U -B verify
       shell: bash
     - name: Nexus IQ Policy Evaluation
+      if: contains(github.ref, '/dependabot/') != true
       uses: sonatype-nexus-community/iq-github-action@master
       with:
         serverUrl: https://iq.aurora.skead.no/

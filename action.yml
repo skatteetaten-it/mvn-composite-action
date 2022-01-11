@@ -22,6 +22,15 @@ inputs:
   sonarqube-token:
     description: "sonarqube-token"
     required: true
+  nexusiq-username:
+    description: "nexusiq-username"
+    required: true
+  nexusiq-password:
+    description: "nexusiq-password"
+    required: true
+  nexusiq-applicationid:
+    description: "nexusiq-applicationid"
+    required: true
 runs:
   using: "composite"
   steps:
@@ -42,6 +51,15 @@ runs:
         GITHUB_TOKEN: ${{ inputs.github-token }} # Needed to get PR information, if any
       run: mvn -U -B verify
       shell: bash
+    - name: Nexus IQ Policy Evaluation
+      uses: sonatype-nexus-community/iq-github-action@master
+      with:
+        serverUrl: https://iq.aurora.skead.no/
+        username: ${{ inputs.nexusiq-username }}
+        password: ${{ inputs.nexusiq-password }}
+        applicationId: ${{ inputs.nexusiq-applicationid }}
+        stage: Build
+        target: ./target/
     - name: Sonar
       if: contains(github.ref, '/dependabot/') != true
       env:

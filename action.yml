@@ -59,7 +59,7 @@ runs:
         username: ${{ inputs.nexusiq-username }}
         password: ${{ inputs.nexusiq-password }}
         applicationId: ${{ inputs.nexusiq-applicationid }}
-        stage: Build
+        stage: ${{ input.type == 'release' && 'Release' || 'Build' }}
         target: ./target/
     - name: Sonar
       if: contains(github.ref, '/dependabot/') != true

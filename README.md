@@ -33,7 +33,7 @@ jobs:
           image-name: ghcr.io/skatteetaten-it/skyklar-pilot/referanse-app/referanse-app
 ```
 
-### Eksempel på å bygge en relase
+### Eksempel på å bygge en release
 
 Lag filen .github/workflows/release.yml
 

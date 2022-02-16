@@ -15,26 +15,22 @@ on:
      - main
 
 jobs:
- build-branch:
-   runs-on: aks-runner
-   steps:
-     - name: Checkout code
-       uses: actions/checkout@v2
-     - name: Hent versjon fra branch
-       id: version
-       uses: skatteetaten-it/mvn-composite-action/version@v1
-       with:
-           type: 'branch'
-     - name: build
-       uses: skatteetaten-it/mvn-composite-action@v1
-       with:
-         skerootca: ${{ secrets.SKEROOTCA }}
-         nexus-user: ${{ secrets.NEXUS_USERNAME }}
-         nexus-pass: ${{ secrets.NEXUS_PASSWORD }}
-         github-token: ${{ secrets.GITHUB_TOKEN }}
-         sonarqube-token: ${{ secrets.SONARQUBE_TOKEN }}
-         sonarqube-host: ${{ secrets.SONARQUBE_HOST }}
-         image-name: ghcr.io/skatteetaten-it/skyklar-pilot/referanse-app/referanse-app:${{ steps.version.outputs.version }}
+  build-branch:
+    runs-on: aks-runner
+    steps:
+      - name: build
+        uses: skatteetaten-it/mvn-composite-action@v1
+        with:
+          type: "branch"
+          skerootca: ${{ secrets.SKEROOTCA }}
+          nexus-user: ${{ secrets.NEXUS_USERNAME }}
+          nexus-pass: ${{ secrets.NEXUS_PASSWORD }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          sonarqube-token: ${{ secrets.SONARQUBE_TOKEN }}
+          nexusiq-username: ${{ secrets.NEXUSIQ_USERNAME }}
+          nexusiq-password: ${{ secrets.NEXUSIQ_PASSWORD }}
+          nexusiq-applicationid: no.skatteetaten.skyklarpilot.referanse-app
+          image-name: ghcr.io/skatteetaten-it/skyklar-pilot/referanse-app/referanse-app
 ```
 
 ### Eksempel på å bygge en relase
@@ -53,23 +49,19 @@ jobs:
   release-build:
     runs-on: aks-runner
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-      - name: Hent versjon fra branch
-        id: version
-        uses: skatteetaten-it/mvn-composite-action/version@v1
-        with:
-            type: 'release'
       - name: build
         uses: skatteetaten-it/mvn-composite-action@v1
         with:
-            skerootca: ${{ secrets.SKEROOTCA }}
-            nexus-user: ${{ secrets.NEXUS_USERNAME }}
-            nexus-pass: ${{ secrets.NEXUS_PASSWORD }}
-            github-token: ${{ secrets.GITHUB_TOKEN }}
-            sonarqube-token: ${{ secrets.SONARQUBE_TOKEN }}
-            sonarqube-host: ${{ secrets.SONARQUBE_HOST }}
-            image-name: ghcr.io/skatteetaten-it/skyklar-pilot/referanse-app/referanse-app:${{ steps.version.outputs.version }}
+          type: "branch"
+          skerootca: ${{ secrets.SKEROOTCA }}
+          nexus-user: ${{ secrets.NEXUS_USERNAME }}
+          nexus-pass: ${{ secrets.NEXUS_PASSWORD }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          sonarqube-token: ${{ secrets.SONARQUBE_TOKEN }}
+          nexusiq-username: ${{ secrets.NEXUSIQ_USERNAME }}
+          nexusiq-password: ${{ secrets.NEXUSIQ_PASSWORD }}
+          nexusiq-applicationid: no.skatteetaten.skyklarpilot.referanse-app
+          image-name: ghcr.io/skatteetaten-it/skyklar-pilot/referanse-app/referanse-app
 ```
 
 ## Hoved action skatteetaten-it/mvn-composite-action@v1
@@ -84,7 +76,10 @@ parametre er:
 - sonarqube-tokens (Token fra sonar, skal være en secret)
 - sonarqube-host (hostnavn til sonar)
 - github-token (github token, er en secret som kommer fra github)
-- image-name (lokasjon til docker image som blir bygd, denne bør inneholde et versjonsnummer, se skatteetaten-it/mvn-composite-action/version)
+- image-name (lokasjon til docker image som blir bygd
+- nexusiq-username (Nexus iq username)
+- nexusiq-password (Nexus iq pqssword)
+- nexusiq-applicationid (Nexus iq applikasjonsid)
 
 ## Versjon action skatteetaten-it/mvn-composite-action/version@v1
 

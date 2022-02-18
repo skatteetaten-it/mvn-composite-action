@@ -7,6 +7,10 @@ inputs:
   skerootca-prosjekter:
     description: "Prosjekter, settes om det er en multi pom"
     required: false
+  java-versjon:
+    description: "Java versjon"
+    required: false
+    default: 11
 runs:
   using: "composite"
   steps:
@@ -18,7 +22,7 @@ runs:
     - name: Set up JDK 1.11
       uses: actions/setup-java@v2
       with:
-        java-version: "11"
+        java-version: ${{ inputs.java-versjon }}
         distribution: "temurin"
     - name: Set up Maven
       uses: stCarolas/setup-maven@v4.2

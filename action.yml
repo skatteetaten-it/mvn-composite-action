@@ -31,6 +31,10 @@ inputs:
   nexusiq-applicationid:
     description: "nexusiq-applicationid"
     required: true
+  java-versjon:
+    description: "Java versjon"
+    required: false
+    default: 11
 runs:
   using: "composite"
   steps:
@@ -46,6 +50,7 @@ runs:
       uses: skatteetaten-it/mvn-composite-action/setup@v1
       with:
         skerootca: ${{ inputs.skerootca }}
+        java-versjon: ${{ inputs.java-versjon }}
 
     - name: Build with maven
       env:

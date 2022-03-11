@@ -35,6 +35,10 @@ inputs:
     description: "Java versjon"
     required: false
     default: 11
+  working-directory:
+    description: "Working directory"
+    required: false
+    default: "."
 runs:
   using: "composite"
   steps:
@@ -43,20 +47,22 @@ runs:
         fetch-depth: 0
     - name: Hent versjon
       id: version
-      uses: skatteetaten-it/mvn-composite-action/version@v1
+      uses: skatteetaten-it/mvn-composite-action/version@feature/working-dir
       with:
         type: ${{ inputs.type }}
     - name: Maven setup
-      uses: skatteetaten-it/mvn-composite-action/setup@v1
+      uses: skatteetaten-it/mvn-composite-action/setup@feature/working-dir
       with:
         skerootca: ${{ inputs.skerootca }}
         java-versjon: ${{ inputs.java-versjon }}
+        working-directory: ${{ inputs.working-directory}}
 
     - name: Build with maven
       env:
         NEXUS_USER: ${{ inputs.nexus-user }}
         NEXUS_PASS: ${{ inputs.nexus-pass }}
         GITHUB_TOKEN: ${{ inputs.github-token }} # Needed to get PR information, if any
+      working-directory: ${{ inputs.working-directory}}
       run: mvn -U -B verify
       shell: bash
     - name: Nexus IQ Policy Evaluation
@@ -68,24 +74,28 @@ runs:
         password: ${{ inputs.nexusiq-password }}
         applicationId: ${{ inputs.nexusiq-applicationid }}
         stage: ${{ inputs.type == 'release' && 'Release' || 'Build' }}
-        target: ./target/
+        target: ${{ inputs.working-directory}}/target/
     - name: Sonar
       if: contains(github.ref, '/dependabot/') != true
       env:
         NEXUS_USER: ${{ inputs.nexus-user }}
         NEXUS_PASS: ${{ inputs.nexus-pass }}
         GITHUB_TOKEN: ${{ inputs.github-token }}
+      working-directory: ${{ inputs.working-directory}}
       run: mvn sonar:sonar -Dsonar.projectVersion=${{ steps.version.outputs.version }} -Dsonar.branch.name=${{ inputs.type == 'release' && 'main' || github.ref_name }} -Dsonar.login=${{ inputs.sonarqube-token }} -e -Dsonar.host.url=https://sonar.aurora.skead.no/   -B
       shell: bash
 
     - name: Test report
       if: contains(github.ref, '/dependabot/') != true
-      uses: skatteetaten-it/mvn-composite-action/test-report@v1
+      uses: skatteetaten-it/mvn-composite-action/test-report@feature/working-dir
+      with:
+        working-directory: ${{ inputs.working-directory}}
 
     - name: Deploy
       if: contains(github.ref, '/dependabot/') != true
-      uses: skatteetaten-it/mvn-composite-action/deploy@v1
+      uses: skatteetaten-it/mvn-composite-action/deploy@feature/working-dir
       with:
+        working-directory: ${{ inputs.working-directory}}
         nexus-user: ${{ inputs.nexus-user }}
         nexus-pass: ${{ inputs.nexus-pass }}
         github-token: ${{ inputs.github-token }}

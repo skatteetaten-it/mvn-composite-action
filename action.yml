@@ -91,7 +91,7 @@ runs:
 
     - name: Test report
       if: contains(github.ref, '/dependabot/') != true
-      uses: skatteetaten-it/mvn-composite-action/test-report@fv1
+      uses: skatteetaten-it/mvn-composite-action/test-report@v1
       with:
         working-directory: ${{ inputs.working-directory}}
 

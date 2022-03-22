@@ -11,12 +11,17 @@ inputs:
     description: "Java versjon"
     required: false
     default: 11
+  working-directory:
+    description: "Working directory"
+    required: false
+    default: "."
 runs:
   using: "composite"
   steps:
     - name: skerootca
       env:
         SKEROOTCA: ${{ inputs.skerootca }}
+      working-directory: ${{ inputs.working-directory}}
       run: ${{ github.action_path }}/skerootca.sh ${{ inputs.skerootca-prosjekter }}
       shell: bash
     - name: Set up JDK 1.11

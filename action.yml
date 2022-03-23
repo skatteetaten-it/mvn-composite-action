@@ -51,7 +51,7 @@ runs:
       with:
         type: ${{ inputs.type }}
     - name: Maven setup
-      uses: skatteetaten-it/mvn-composite-action/setup@v1
+      uses: skatteetaten-it/mvn-composite-action/setup@feature/skerootca
       with:
         skerootca: ${{ inputs.skerootca }}
         java-versjon: ${{ inputs.java-versjon }}

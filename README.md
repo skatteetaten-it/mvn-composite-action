@@ -80,6 +80,8 @@ parametre er:
 - nexusiq-username (Nexus iq username)
 - nexusiq-password (Nexus iq pqssword)
 - nexusiq-applicationid (Nexus iq applikasjonsid)
+- java-versjon (valgfri default er 17)
+- working-directory (valgfri, om den settes kan man bygge fra en annen katalog)
 
 ## Versjon action skatteetaten-it/mvn-composite-action/version@v1
 

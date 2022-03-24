@@ -39,6 +39,10 @@ inputs:
     description: "Working directory"
     required: false
     default: "."
+  build-docker-image:
+    description: "Build docker image"
+    required: false
+    default: true
 runs:
   using: "composite"
   steps:
@@ -47,7 +51,7 @@ runs:
         fetch-depth: 0
     - name: Hent versjon
       id: version
-      uses: skatteetaten-it/mvn-composite-action/version@v1
+      uses: skatteetaten-it/mvn-composite-action/version@feature/lib
       with:
         type: ${{ inputs.type }}
     - name: Maven setup
@@ -93,10 +97,11 @@ runs:
 
     - name: Deploy
       if: contains(github.ref, '/dependabot/') != true
-      uses: skatteetaten-it/mvn-composite-action/deploy@v1
+      uses: skatteetaten-it/mvn-composite-action/deploy@feature/lib
       with:
         working-directory: ${{ inputs.working-directory}}
         nexus-user: ${{ inputs.nexus-user }}
         nexus-pass: ${{ inputs.nexus-pass }}
         github-token: ${{ inputs.github-token }}
+        build-docker-image: ${{ inputs.build-docker-image }}
         image-name: ${{ inputs.image-name }}:${{ steps.version.outputs.version }}

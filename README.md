@@ -82,6 +82,7 @@ parametre er:
 - nexusiq-applicationid (Nexus iq applikasjonsid)
 - java-versjon (valgfri default er 17)
 - working-directory (valgfri, om den settes kan man bygge fra en annen katalog)
+- build-docker-image (valgfri, default true. Sett denne til false om man ønsker å bygge maven biblioteker)
 
 ## Versjon action skatteetaten-it/mvn-composite-action/version@v1
 

@@ -26,6 +26,10 @@ function run() {
   console.log(`Version is: ${version}`);
 
   core.setOutput("version", version);
+  core.setOutput(
+    "mvnversion",
+    type == "branch" ? version + "-SNAPSHOT" : version
+  );
 }
 
 try {

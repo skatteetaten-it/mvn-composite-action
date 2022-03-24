@@ -5,8 +5,10 @@ inputs:
     description: "branch, release"
     required: true
 outputs:
-  version: # id of output
+  version:
     description: "The version number"
+  mvnversion:
+    description: "The version number for maven"
 runs:
   using: "node12"
   main: "index.js"

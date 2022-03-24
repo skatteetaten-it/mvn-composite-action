@@ -50,10 +50,6 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: Testing
-      if: ${{ inputs.build-docker-image == true }}
-      run: echo "hello world"
-      shell: bash
     - uses: actions/checkout@v2
       with:
         fetch-depth: 0

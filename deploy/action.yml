@@ -26,15 +26,15 @@ runs:
   steps:
     - name: Set version
       env:
-        NEXUS_USER: ${{ secrets.NEXUS_USERNAME }}
-        NEXUS_PASS: ${{ secrets.NEXUS_PASSWORD }}
+        NEXUS_USER: ${{ inputs.nexus-user }}
+        NEXUS_PASS: ${{ inputs.nexus-pass }}
       working-directory: ${{ inputs.working-directory}}
       run: mvn -U -B versions:set -DnewVersion=${{ steps.prep.outputs.mvnversion }}
       shell: bash
     - name: deploy maven image
       env:
-        NEXUS_USER: ${{ secrets.NEXUS_USERNAME }}
-        NEXUS_PASS: ${{ secrets.NEXUS_PASSWORD }}
+        NEXUS_USER: ${{ inputs.nexus-user }}
+        NEXUS_PASS: ${{ inputs.nexus-pass }}
       working-directory: ${{ inputs.working-directory}}
       run: mvn  -DskipTests=true deploy -Duser.timezone=CET -U
       shell: bash

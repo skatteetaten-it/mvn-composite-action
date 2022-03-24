@@ -9,7 +9,7 @@ inputs:
     required: true
   image-name:
     description: "build image name"
-    required: true
+    required: false
   nexus-user:
     description: "Nexus username"
     required: true

@@ -43,6 +43,10 @@ inputs:
     description: "Build docker image"
     required: false
     default: true
+  jacoco-csv-file:
+    description: "Overstyr jacoco csv fil"
+    required: false
+    default: target/site/jacoco/jacoco.csv
 runs:
   using: "composite"
   steps:
@@ -94,6 +98,7 @@ runs:
       uses: skatteetaten-it/mvn-composite-action/test-report@v1
       with:
         working-directory: ${{ inputs.working-directory}}
+        jacoco-csv-file: ${{ inputs.jacoco-csv-file}}
 
     - name: Deploy
       if: contains(github.ref, '/dependabot/') != true

@@ -31,8 +31,8 @@ inputs:
   nexusiq-applicationid:
     description: "nexusiq-applicationid"
     required: true
-  java-versjon:
-    description: "Java versjon"
+  java-version:
+    description: "Java version"
     required: false
     default: 17
   working-directory:
@@ -53,16 +53,16 @@ runs:
     - uses: actions/checkout@v2
       with:
         fetch-depth: 0
-    - name: Hent versjon
+    - name: Get version
       id: version
-      uses: skatteetaten-it/mvn-composite-action/version@main
+      uses: skatteetaten-it/mvn-composite-action/version@v2
       with:
         type: ${{ inputs.type }}
     - name: Maven setup
-      uses: skatteetaten-it/mvn-composite-action/setup@v1
+      uses: skatteetaten-it/mvn-composite-action/setup@v2
       with:
         skerootca: ${{ inputs.skerootca }}
-        java-versjon: ${{ inputs.java-versjon }}
+        java-version: ${{ inputs.java-version }}
         working-directory: ${{ inputs.working-directory}}
 
     - name: Build with maven
@@ -95,14 +95,14 @@ runs:
 
     - name: Test report
       if: contains(github.ref, '/dependabot/') != true
-      uses: skatteetaten-it/mvn-composite-action/test-report@v1
+      uses: skatteetaten-it/mvn-composite-action/test-report@v2
       with:
         working-directory: ${{ inputs.working-directory}}
         jacoco-csv-file: ${{ inputs.jacoco-csv-file}}
 
     - name: Deploy
       if: contains(github.ref, '/dependabot/') != true
-      uses: skatteetaten-it/mvn-composite-action/deploy@main
+      uses: skatteetaten-it/mvn-composite-action/deploy@v2
       with:
         working-directory: ${{ inputs.working-directory}}
         nexus-user: ${{ inputs.nexus-user }}

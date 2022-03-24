@@ -67,7 +67,7 @@ runs:
         NEXUS_PASS: ${{ inputs.nexus-pass }}
         GITHUB_TOKEN: ${{ inputs.github-token }} # Needed to get PR information, if any
       working-directory: ${{ inputs.working-directory}}
-      run: mvn -U -B verify
+      run: mvn -U -B verify -Duser.timezone=CET -U
       shell: bash
     - name: Nexus IQ Policy Evaluation
       if: contains(github.ref, '/dependabot/') != true

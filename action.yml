@@ -110,3 +110,4 @@ runs:
         github-token: ${{ inputs.github-token }}
         build-docker-image: ${{ inputs.build-docker-image }}
         image-name: ${{ inputs.image-name }}:${{ steps.version.outputs.version }}
+        mvnversion: ${{ steps.version.outputs.mvnversion }}

@@ -21,6 +21,9 @@ inputs:
     description: "Build docker image"
     required: false
     default: true
+  mvnversion:
+    description: "Maven version"
+    required: true
 runs:
   using: "composite"
   steps:
@@ -29,7 +32,7 @@ runs:
         NEXUS_USER: ${{ inputs.nexus-user }}
         NEXUS_PASS: ${{ inputs.nexus-pass }}
       working-directory: ${{ inputs.working-directory}}
-      run: mvn -U -B versions:set -DnewVersion=${{ steps.prep.outputs.mvnversion }}
+      run: mvn -U -B versions:set -DnewVersion=${{ inputs.mvnversion }}
       shell: bash
     - name: deploy maven image
       env:

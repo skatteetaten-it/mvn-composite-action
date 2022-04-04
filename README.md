@@ -110,7 +110,7 @@ parametre er:
 
 ## Deploy action skatteetaten-it/mvn-composite-action/deploy@v1
 
-Delpoyer til et docker repository. Den er en del action av hoved action men kan også benyttes seperat.
+Deployer til et docker repository. Den er en del action av hoved action men kan også benyttes seperat.
 
 parametre er:
 

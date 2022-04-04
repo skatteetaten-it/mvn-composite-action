@@ -25,7 +25,10 @@ function run() {
   version = version.replace(/\//g, "_");
   console.log(`Version is: ${version}`);
 
-  core.setOutput("version", version);
+  core.setOutput(
+    "version",
+    type == "branch" ? version + "-" + github.context.runNumber : version
+  );
   core.setOutput(
     "mvnversion",
     type == "branch" ? version + "-SNAPSHOT" : version

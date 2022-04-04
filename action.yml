@@ -55,7 +55,7 @@ runs:
         fetch-depth: 0
     - name: Get version
       id: version
-      uses: skatteetaten-it/mvn-composite-action/version@v2
+      uses: skatteetaten-it/mvn-composite-action/version@feature/run_number
       with:
         type: ${{ inputs.type }}
     - name: Maven setup

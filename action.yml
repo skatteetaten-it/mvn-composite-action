@@ -7,6 +7,9 @@ inputs:
   skerootca:
     description: "root ca"
     required: true
+  skerootca-prosjekter:
+    description: "Prosjekter, settes om det er en multi pom"
+    required: false
   image-name:
     description: "build image name"
     required: false
@@ -62,6 +65,7 @@ runs:
       uses: skatteetaten-it/mvn-composite-action/setup@v2
       with:
         skerootca: ${{ inputs.skerootca }}
+        skerootca-prosjekter: ${{ inputs.skerootca-prosjekter }}
         java-version: ${{ inputs.java-version }}
         working-directory: ${{ inputs.working-directory}}
 
